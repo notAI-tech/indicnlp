@@ -3,19 +3,13 @@
 
 <head>
     <title>Indic NLP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body style="background-color:#21232d">
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-
     <style>
         #resultJSON:empty {
             display: none;
@@ -100,16 +94,16 @@
 
     <input type="text" class="form-control" id="queryInput"
         style="background-color: #d8d8d6; position: absolute; top:30%; width:50%; left: 23%; text-align: center;"
-        placeholder="chandrababu naidu andhra pradesh maajee mukhya mantri">
+        placeholder="Enter the text to be transliterated.">
     <div id="loader"></div>
 
     <button class="btn btn-primary" type="button" onclick="parseQuery()"
         style="position: absolute; top:30%; left: 73.5%; background-color: #57c7ff; color: #21232d;">Submit</button>
 
-    <div class="dropdown" style="position: absolute; top: 30%; left:10%;">
+    <div class="dropdown" style="position: absolute; top: 30%; left:14%;">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            Select Language
+            Language
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">Telugu</a>
@@ -117,6 +111,12 @@
             <a class="dropdown-item" href="#">Kannada</a>
         </div>
     </div>
+
+    <script>
+        $(".dropdown-menu a ").click(function () {
+            $('#dropdownMenuButton').text($(this).text());
+        });
+    </script>
 
     <div class="col-sm-12" style="position: absolute; top: 36%; width: 50%; left: 23%;">
         <pre id='resultJSON' style="background-color: #d8d8d6; color: #21232d;"></pre>
