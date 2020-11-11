@@ -100,8 +100,21 @@
     <button class="btn btn-primary" type="button" onclick="parseQuery()"
         style="position: absolute; top:30%; left: 73.5%; background-color: #57c7ff; color: #21232d;">Submit</button>
 
+
+    <div class="dropdown" style="position: absolute; top: 30%; left:5%;">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="modelButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Task
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Transliteration</a>
+            <a class="dropdown-item" href="#">Translation</a>
+        </div>
+    </div>
+
+
     <div class="dropdown" style="position: absolute; top: 30%; left:14%;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="languageButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Language
         </button>
