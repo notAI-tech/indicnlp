@@ -1,140 +1,42 @@
-<!DOCTYPE html>
 <html>
 
-<head>
-    <title>Indic NLP</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
+    <head>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.0/brython_stdlib.min.js"></script>
 
-<body style="background-color:#21232d">
-    <style>
-        #resultJSON:empty {
-            display: none;
-        }
+    </head>
 
-        #loader {
-            z-index: 1000;
-            border: 5px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 5px solid #1e93e0;
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            -webkit-animation: spin 1s linear infinite;
-            /* Safari */
-            animation: spin 1s linear infinite;
-        }
+    <body onload="brython()">
 
-        /* Safari */
+        <script type="text/python">
+        from browser import document, alert, ajax
+        from json import dumps, loads
 
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
+        URL = "https://tech.notai.tech/deepsegment/en/async?api_key=FSOY9tnEJmPG9yB765RcXJFUpCoLQ2VLnlFWoUtb"
 
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
+        def show_result(req):
+            alert(req.text)
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+        def get_result_from_unique_id(req):
+            unique_id = loads(req.text)['unique_id']
+            print(f"UNIQUE_ID: {unique_id}", URL)
+            ajax.post(URL.replace('/async', '/result'), data=dumps({"unique_id": unique_id}), headers={'content-type': 'application/json'}, blocking=True, oncomplete=show_result)
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        function parseQuery(e) {
-            query = $('#queryInput').val();
-            $('#loader').show();
-
-            let payload = {
-                url: query
-            };
-            console.log(JSON.stringify(payload, undefined, 2))
-            processResponse(payload)
-            // axios.post('https://postman-echo.com/post', payload)
-            //     .then((response) => {
-            //         if (!response || !response.data) {
-            //             console.error('Server Error! Please try again');
-            //             $('#loader').hide();
-            //             return;
-            //         }
-            //         $('#loader').hide();
-            //         console.log(JSON.stringify(response.data, undefined, 2))
-            //         processResponse(response.data);
-            //     })
-            //     .catch((err) => {
-            //         $('#loader').hide();
-            //         console.error(err);
-            //     })
-        }
-
-        function processResponse(data) {
-            $('#resultJSON').html('<h4>Result:</h4><br>' + JSON.stringify(data, undefined, 2));
-        }
-
-        window.onload = function () {
-            console.log("ready!");
-            $('#loader').hide();
-        };
-
-    </script>
-
-    <input type="text" class="form-control" id="queryInput"
-        style="background-color: #d8d8d6; position: absolute; top:30%; width:50%; left: 23%; text-align: center;"
-        placeholder="Enter the text to be transliterated.">
-    <div id="loader"></div>
-
-    <button class="btn btn-primary" type="button" onclick="parseQuery()"
-        style="position: absolute; top:30%; left: 73.5%; background-color: #57c7ff; color: #21232d;">Submit</button>
+        def get_and_display_result(url, in_dict):
+            ajax.post(url, data=dumps(in_dict), headers={'content-type': 'application/json'}, blocking=True, oncomplete=get_result_from_unique_id)
 
 
-    <div class="dropdown" style="position: absolute; top: 30%; left:5%;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="modelButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Task
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Transliteration</a>
-            <a class="dropdown-item" href="#">Translation</a>
-        </div>
-    </div>
+        def echo(event):
+            text = document["Submit"].value
+            get_and_display_result(URL, {"data": [text]})
+            
+            
 
+        document["submit_button"].bind("click", echo)
+        </script>
 
-    <div class="dropdown" style="position: absolute; top: 30%; left:14%;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="languageButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Language
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Telugu</a>
-            <a class="dropdown-item" href="#">Hindi</a>
-            <a class="dropdown-item" href="#">Kannada</a>
-        </div>
-    </div>
+        <input id="Submit"><button id="submit_button">click !</button>
 
-    <script>
-        $(".dropdown-menu a ").click(function () {
-            $('#dropdownMenuButton').text($(this).text());
-        });
-    </script>
-
-    <div class="col-sm-12" style="position: absolute; top: 36%; width: 50%; left: 23%;">
-        <pre id='resultJSON' style="background-color: #d8d8d6; color: #21232d;"></pre>
-    </div>
-
-</body>
+    </body>
 
 </html>
